@@ -1,7 +1,19 @@
+---
 - name: Parchado Reto 1
   # A quienes se les va a operar 
-  hosts: all
+  hosts: web
+  become: true
   tasks: 
-    - name: Dame un mensaje
-      ansible.builtin.debug:
-        msg: "Bienvenido al mundo de Ansible"
+    - name: Actulizaciones
+      ansible.builtin.dfn:
+       name: "*"
+       state: lastest
+    - name: Validar Necesidad Reinicio
+      ansible.builtin.command: needs-restarting
+      register: need_restart
+      failed_when: false
+    - name: Reinicio
+      ansible.builtin.reboot:
+       msg: "Reinicio despues de aplicar actualizaciones"
+       when: need_restart.rc == 1
+...
