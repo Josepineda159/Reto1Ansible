@@ -7,12 +7,13 @@
     - name: Actulizaciones
       ansible.builtin.dnf:
        name: "*"
-       state: lastest
+       state: latest
     - name: Validar Necesidad Reinicio
       ansible.builtin.command: needs-restarting
       register: need_restart
       failed_when: false
     - name: Reinicio
       ansible.builtin.reboot:
+      msg: "Reinicio despues de aplicar actualizaciones"
        when: need_restart.rc == 1
 ...
