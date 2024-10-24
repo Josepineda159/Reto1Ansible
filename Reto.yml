@@ -15,5 +15,5 @@
     - name: Reinicio
       ansible.builtin.reboot:
        msg: "Reinicio despues de aplicar actualizaciones"
-       when: need_restart.rc == 1
+      when: need_restart.rc == 1
 ...
